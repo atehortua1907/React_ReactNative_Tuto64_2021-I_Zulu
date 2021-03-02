@@ -31,8 +31,8 @@ function App() {
               tasks.map((task) => (
                 <li className="list-group-item" key={task.id}>
                   <span className="lead">{task.name}</span>
-                  <button className="btn btn-danger btn-sm float-left mx-2">Eliminar</button>
-                  <button className="btn btn-warning btn-sm float-right">Editar</button>
+                  <button className="btn btn-danger btn-sm float-end mx-2">Eliminar</button>
+                  <button className="btn btn-warning btn-sm float-end">Editar</button>
                 </li>
               ))
 
@@ -49,7 +49,7 @@ function App() {
               onChange={(text) => setTask(text.target.value)}
               value={task}
             />
-            <button className="btn btn-dark btn-block" type="submit">Agregar</button>
+            <button className="btn btn-dark w-100" type="submit">Agregar</button>
           </form>
         </div>
       </div>
