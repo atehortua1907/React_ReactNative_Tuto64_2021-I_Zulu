@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {isEmpty} from 'lodash';
+import {isEmpty, size} from 'lodash';
 import shortid from 'shortid';
 
 function App() {
@@ -19,6 +19,11 @@ function App() {
     setTask("");
   }
 
+  const deleteTask = (id) => {
+    const filteredTask = tasks.filter(task => task.id !== id);
+    setTasks(filteredTask);
+  };
+
   return (
     <div className="container mt-5">
       <h1>Tareas</h1>
@@ -26,18 +31,35 @@ function App() {
       <div className="row">
         <div className="col-8">
           <h4 className="text-center">Lista de Tareas</h4>
-          <ul className="list-group">
-            {
-              tasks.map((task) => (
-                <li className="list-group-item" key={task.id}>
-                  <span className="lead">{task.name}</span>
-                  <button className="btn btn-danger btn-sm float-end mx-2">Eliminar</button>
-                  <button className="btn btn-warning btn-sm float-end">Editar</button>
-                </li>
-              ))
+          {
+            size(tasks) == 0
+            ? (<h5 className="text-center">Aún no hay tareas</h5>)
+            : (
+                <ul className="list-group">
+                {
+                  tasks.map((task) => (
+                    <li className="list-group-item" key={task.id}>
+                      <span className="lead">{task.name}</span>
+                      <button 
+                        className="btn btn-danger btn-sm float-end mx-2"
+                        onClick={()=>deleteTask(task.id)}
+                      >
+                          Eliminar
+                      </button>
+                      <button 
+                        className="btn btn-warning btn-sm float-end"
+                      >
+                        Editar
+                      </button>
+                    </li>
+                  ))
 
-            }
-          </ul>
+                }
+              </ul>
+            )
+
+          }
+
         </div>
         <div className="col-4">
           <h4 className="text-center">Formulario</h4>
