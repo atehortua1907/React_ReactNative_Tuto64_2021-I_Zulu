@@ -5,6 +5,9 @@ import shortid from 'shortid';
 function App() {
   const [task, setTask] = useState(null);
   const [tasks, setTasks] = useState([]);
+  const [editMode, setEditMode] = useState(false);
+  const [id, setId] = useState("");
+  
   const addTask = (e) =>{
     e.preventDefault();
     if(isEmpty(task)){
@@ -19,9 +22,28 @@ function App() {
     setTask("");
   }
 
+  const saveTask = (e) =>{
+    e.preventDefault();
+    if(isEmpty(task)){
+      console.log("Task Empty");
+      return;
+    }
+    const editedTasks = tasks.map(item => item.id == id ? {id, name:task} : item);
+    setTasks(editedTasks);
+    setEditMode(false);
+    setTask("");
+    setId("");
+  }
+
   const deleteTask = (id) => {
     const filteredTask = tasks.filter(task => task.id !== id);
     setTasks(filteredTask);
+  };
+
+  const editTask = (taskEdited) => {
+    setTask(taskEdited.name);
+    setEditMode(true);
+    setId(taskEdited.id);
   };
 
   return (
@@ -48,6 +70,7 @@ function App() {
                       </button>
                       <button 
                         className="btn btn-warning btn-sm float-end"
+                        onClick={()=>editTask(task)}
                       >
                         Editar
                       </button>
@@ -62,8 +85,10 @@ function App() {
 
         </div>
         <div className="col-4">
-          <h4 className="text-center">Formulario</h4>
-          <form onSubmit={addTask}>
+          <h4 className="text-center">
+            {editMode ? "Modificar Tarea" : "Agregar Tarea"}
+          </h4>
+          <form onSubmit={editMode ? saveTask : addTask}>
             <input
               type="text"
               className="form-control mb-2"
@@ -71,7 +96,10 @@ function App() {
               onChange={(text) => setTask(text.target.value)}
               value={task}
             />
-            <button className="btn btn-dark w-100" type="submit">Agregar</button>
+            <button 
+              className={editMode ? "btn btn-warning w-100" : "btn btn-dark w-100"} type="submit">
+              {editMode ? "Guardar" : "Agregar"}
+            </button>
           </form>
         </div>
       </div>
