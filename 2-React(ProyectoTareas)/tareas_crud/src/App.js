@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {isEmpty, size} from 'lodash';
-import {getCollection, addDocument, updateDocument} from './actions';
+import {getCollection, addDocument, updateDocument, deleteDocument} from './actions';
 
 function App() {
   const [task, setTask] = useState("");
@@ -60,7 +60,12 @@ const validForm = () =>{
     setId("");
   }
 
-  const deleteTask = (id) => {
+  const deleteTask = async(id) => {
+    const result = await deleteDocument("task", id);
+    if(!result.statusResponse){
+      setError(result.error);
+      return;
+    }
     const filteredTask = tasks.filter(task => task.id !== id);
     setTasks(filteredTask);
   };
