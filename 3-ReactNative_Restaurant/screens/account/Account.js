@@ -10,12 +10,14 @@ export default function Account() {
     useEffect(() => {
         setLogin(isUserLogged())
     }, [])
+    
+
 
     if(login == null){
         return <Text>Cargando...</Text>
     }
 
-    return login ? <UserLogged/> : <UserGuest/>
+    return login ? <UserLogged/> : <UserGuest/>;
 }
 
 const styles = StyleSheet.create({})
