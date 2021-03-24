@@ -8,6 +8,7 @@ const firebaseConfig = {
     storageBucket: "restaurantsreactnativezulu.appspot.com",
     messagingSenderId: "452452254393",
     appId: "1:452452254393:web:44dd1d1e42015ecf4ed168"
+    
   };
 
   export const firebaseApp = firebase.initializeApp(firebaseConfig);

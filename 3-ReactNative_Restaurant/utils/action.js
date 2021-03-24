@@ -8,5 +8,6 @@ export const isUserLogged = () => {
     let isLogged = false;
     firebase.auth().onAuthStateChanged((user) => {
         user !== null && (isLogged = true);
+        
     });
 };
